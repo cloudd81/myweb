@@ -1,0 +1,151 @@
+@charset "UTF-8";
+/* layout.css */
+
+@font-face {
+    font-family: 'ChosunCentennial';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ChosunCentennial.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RIDIBatang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+	font-family: 'Pretendard-Regular', 'normal';
+    font-size: 20px;
+    line-height: 1.8;
+    color: #222222;
+}
+a {
+  text-decoration-line: none !important;
+  color : black;
+}
+
+a:link {
+  color : black;
+}
+a:visited {
+  color : black;
+}
+a:hover {
+  color : black;
+}
+a:active {
+  color : black;
+}
+
+p {font-size: 16px;}
+
+#title {font-family: 'ChosunCentennial', 'normal';}
+
+.margin {margin-bottom: 20px;}
+
+.margin2 {margin-top: 10px; margin-bottom: 10px;}
+
+.carousel-inner img { 
+  width: 100%; /* Set width to 100% */
+  margin: auto;
+}
+.carousel-caption h3, h4{
+  color: #222222 !important;
+}
+.textbox {
+  background-color :#ffffff;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.bgbox {
+	background-image: url("./images/miniproj/paperbg1.jpg");	
+}
+@media (max-width: 768px) {
+	.carousel-caption {
+    	display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+	}
+}
+.container-fluid {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.navbar {
+    padding-top: 15px;
+    padding-bottom: 10px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+    letter-spacing: 5px;
+}
+.navbar-nav {
+	margin-left: 20px;
+}
+.navbar-nav  li a {
+    color: #F1F1F1 !important;
+}
+.navbar-nav  li a:hover {
+    color: #E2DCC8 !important;
+}
+#indexbg {
+    background-color: #100F0F !important;
+}
+#topbg {
+	height: 120px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 40%;
+}
+#myNavbar {
+	margin-top : 2px;
+}
+#clock {
+	color : #000000;
+	text-align: center;
+	margin : auto;
+}
+
+/* 폰트 */
+.font1 {
+	text-align: center;
+	font-family: 'ChosunCentennial', 'normal';
+	font-weight: normal;
+}
+.font2 {
+	text-align: center;
+	font-family: 'Pretendard-Regular', 'normal';
+}
+.font3 {
+	text-align: left;
+	font-family: 'Pretendard-Regular', 'normal';
+}
+.context {margin: auto; text-align: center; font-family: 'RIDIBatang', 'normal'; font-size:15px;}
+
+/* 페이지 번호 */
+#paging {
+	height: 40px;
+}
+.pagination {
+	margin: 2.5px;
+	font-family: 'Pretendard-Regular', 'normal';
+	font-size: 15px;
+}
+.active a {
+	background-color: #FFF8EA !important;
+	color : #594545 !important;
+	border-color: #9E7676 !important;
+}
+.pagenum {
+	color : #9E7676 !important;
+	border-color: #9E7676 !important;
+}
