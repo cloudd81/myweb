@@ -24,12 +24,12 @@
 		
 		dto.setMname(mname);
 		dto.setEmail(email);
-		int cnt = dao.findID2(mname, email);
-		/* boolean result = dao.findID(dto); */
+		/* int cnt = dao.findID2(mname, email); */
+		boolean result = dao.findID(dto);
 		out.println("<tr><td>이름 : <strong>" + mname + "</strong><br></td></tr>");
 		out.println("<tr><td>이메일 : <strong>" + email + "</strong></td></tr>");
-		if(cnt!=0)
-		/* if(result==true) */{
+		/* if(cnt!=0) */
+		if(result==true){
 			out.println("<tr><td><p style='color:red;'>가입하신 정보가 있습니다<br>이메일로 임시비밀번호가 발송되었습니다</p></td>");
 %>	
 		<td><button class="btn btn-default" onclick="window.close()">창닫기</button></td></tr>

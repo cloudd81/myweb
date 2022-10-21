@@ -32,6 +32,10 @@ select email from friends;
 
 select * from friends;
 
+update friends set mlevel='D1' where id='ginggang';
+
+commit;
+
 insert into friends(id, passwd, mname, tel, email, zipcode, address1, address2, job, hope, mlevel, mdate)
 values('webmaster', '12341234', '웹마스터', '123-4567', 'webmaster@itwill.com'
      , '12345', '서울시 강남구 역삼동', '삼원타워4층', 'A02', '세계평화' ,'A1', sysdate);

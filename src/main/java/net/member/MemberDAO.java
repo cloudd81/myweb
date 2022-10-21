@@ -152,8 +152,9 @@ public class MemberDAO {
 			con = dbopen.getConnection();
 			
 			sql = new StringBuilder();
-			sql.append(" DELETE FROM friends ");
-			sql.append(" WHERE id=? AND passwd=? ");
+			sql.append(" UPDATE friends ");
+			sql.append(" SET mlevel = 'F1' ");
+			sql.append(" WHERE id = ? AND passwd = ? ");
 			
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, dto.getId());
@@ -161,7 +162,7 @@ public class MemberDAO {
 			cnt = pstmt.executeUpdate();
 			
 		} catch (Exception e) {
-			System.out.println("삭제 실패 : " + e);
+			System.out.println("탈퇴 실패 : " + e);
 		} finally {
 			DBClose.close(con, pstmt);
 		} // end
@@ -251,9 +252,7 @@ public class MemberDAO {
 			pstmt.setString(1, mname);
 			pstmt.setString(2, email);
 			rs=pstmt.executeQuery();
-			if(rs.next()) {
-				cnt = rs.getInt("cnt");
-				
+			if(rs.next()) {				
 				sql = new StringBuilder();
 				sql.append(" UPDATE friends ");
 				sql.append(" SET passwd = ? ");
@@ -278,7 +277,7 @@ public class MemberDAO {
 				Message msg = new MimeMessage(sess);
 				
 				msg.setRecipients(Message.RecipientType.TO, address); // 받는 사람
-				msg.setFrom(new InternetAddress("cloudd81@itwill.com")); // 보내는 사람
+				msg.setFrom(new InternetAddress("cloudd81@itwill.co.kr")); // 보내는 사람
 				msg.setSubject("임시 비밀번호 발송 메일"); // 메일 제목
 				msg.setContent(content, "text/html; charset=UTF-8"); // 메일 내용
 				msg.setSentDate(new Date()); // 메일 보낸 날짜
@@ -288,6 +287,7 @@ public class MemberDAO {
 				
 				System.out.println(email + "님에게" + repasswd + " 비밀번호가 메일로 발송되었습니다<br>내용 : " + content);
 				System.out.println(cnt);
+				cnt = rs.getInt("cnt");
 			} // if end			
 			
 		} catch (Exception e) {

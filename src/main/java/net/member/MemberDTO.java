@@ -112,7 +112,12 @@ public class MemberDTO { // 전송객체 Value Object
 	public void setMdate(String mdate) {
 		this.mdate = mdate;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "MemberDTO [id=" + id + ", passwd=" + passwd + ", mname=" + mname + ", tel=" + tel + ", email=" + email
+				+ ", zipcode=" + zipcode + ", address1=" + address1 + ", address2=" + address2 + ", job=" + job
+				+ ", hope=" + hope + ", mlevel=" + mlevel + ", mdate=" + mdate + "]";
+	}
 	
 }

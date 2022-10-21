@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="auth.jsp" %>
 <%@ include file="../header_bbs.jsp" %>
  <!-- 본문 시작 -->
 	<div class="container">

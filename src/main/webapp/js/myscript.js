@@ -235,6 +235,55 @@ function pwCheck2(){
 
 function findCheck() {
 	 
-	window.open("findID.jsp", "findwin", "width=400, height=350");
+	window.open("findID.jsp", "findwin", "width=600, height=300");
 	
 } // mailCheck() end
+
+function pdsCheck() {
+	// 1) 이름? 2글자 이상
+	let wname = document.getElementById("wname").value;
+	wname = wname.trim();
+	if(wname.length<2){
+		alert("이름은 2글자 이상 입력해주세요");
+		document.getElementById("wname").focus();
+		return false;
+	} // if end
+	
+	// 2) 제목? 2자 이상
+	let subject = document.getElementById("subject").value;
+	subject = subject.trim();
+	if(subject.length<2){
+		alert("제목은 2글자 이상 입력해주세요");
+		document.getElementById("subject").focus();
+		return false;
+	} // if end
+	
+	// 3) 비밀번호? 5자 이상
+	let passwd = document.getElementById("passwd").value;
+	passwd = passwd.trim();
+	if(passwd.length<4){
+		alert("비밀번호는 4글자 이상 입력해주세요");
+		document.getElementById("passwd").focus();
+		return false;
+	} // if end
+	
+	// 4) 첨부파일
+	// -> 파일의 확장명이 이미지 파일일 경우에만 업로드 가능
+	let filename = $("#filename").val();
+	filename = filename.trim();
+	if(filename.length==0){
+		alert("이미지 파일이 없습니다");
+		return false;
+	} else {
+		let dot = filename.lastIndexOf("."); // filename 변수 값에서 마지막 .의 순서값
+		let ext = filename.substr(dot+1); // 확장명 : 마지막 . 이후 문자열 가져오기
+		ext = ext.toLowerCase(); // 확장명을 전부 소문자로 치환
+		if(ext=="png" || ext=="jpg" || ext=="gif" || ext=="jpeg" || ext=="heic"){
+			return true;
+		} else {
+			alert("png, jps, gif, jpeg, heic 형식의 파일만 업로드 가능합니다");
+			return false;
+		} // if end
+	} // if end
+	
+} // pdsCheck() end

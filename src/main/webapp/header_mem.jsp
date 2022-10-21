@@ -71,7 +71,7 @@
 %>	
         <li>
         	<a class="font2" href="../member/loginForm.jsp">
-        		<span class="glyphicon glyphicon-log-in"></span>
+        		<span class="glyphicon glyphicon-user"></span>
         		<%=s_id%>님
         	</a>
         </li>

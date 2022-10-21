@@ -16,11 +16,11 @@
 		dao.incrementCnt(bbsno); // 조회수 증가
 %>
 		<tr>
-			<th>글 제목</th>			
+			<th class="font2">글 제목</th>			
 			<td class="font2"><%=dto.getSubject()%></td>
 		</tr>
 		<tr>
-			<th>글 내용</th>			
+			<th class="font2">글 내용</th>			
 			<td class="font2" style="text-align: left; padding-left: 20px">
 <%
 			// 특수문자로 치환하기
@@ -31,15 +31,15 @@
 			</td>
 		</tr>
 		<tr>
-			<th>조회수</th>			
+			<th class="font2">조회수</th>			
 			<td class="font2"><%=dto.getReadcnt()%></td>
 		</tr>
 		<tr>
-			<th>작성일</th>	
+			<th class="font2">작성일</th>	
 			<td class="font2"><%=dto.getRegdt()%></td>
 		</tr>
 		<tr>
-			<th>ip 주소</th>			
+			<th class="font2">ip 주소</th>			
 			<td class="font2"><%=dto.getIp()%></td>
 		</tr>
 		<tr>

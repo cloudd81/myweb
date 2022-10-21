@@ -9,7 +9,7 @@ public class MyAuthenticator extends Authenticator {
 	private PasswordAuthentication pa;
 	
 	public MyAuthenticator() { // 기본 생성자
-		pa = new PasswordAuthentication("아이디", "비밀번호");
+		pa = new PasswordAuthentication("soldesk@pretyimo.cafe24.com", "soldesk6901");
 	} // end
 	
 	@Override

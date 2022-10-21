@@ -20,6 +20,17 @@
 		out.print("		alert('삭제 되었습니다');");
 		out.print(" 	location.href='../index.jsp';");
 		out.print("</script>");
+		
+		Cookie[] cookies = request.getCookies() ;
+		if(cookies != null){
+			for(int i=0; i < cookies.length; i++){
+				// 쿠키의 유효시간을 0으로 설정하여 만료시킨다
+				cookies[i].setMaxAge(0) ;
+				// 응답 헤더에 추가한다
+				response.addCookie(cookies[i]) ;
+			} // for end
+		} // if end
+		
 	} // if end	
 %>
  <!-- 본문 끝 -->
