@@ -48,8 +48,8 @@ WHERE pdsno = ? AND passwd = ?;
 
 -- 행 수정
 UPDATE tb_pds
-SET wname=?, subject=?, filename=?, filesize=?
-WHERE pdsno = ? AND passwd = ?;
+SET wname='버벌진트', subject='이렇게 문자', filename='다운로드.jpeg', filesize=4046
+WHERE pdsno = 11 AND passwd = 1111;
 
 -- 조회수 증가
 update tb_pds set readcnt=readcnt+1 where bbsno=?;

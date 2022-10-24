@@ -35,14 +35,14 @@
 		</tr>
 		<tr>
 		   <td>
-		      <input class="font3" type="password" name="passwd" id="passwd" placeholder="비밀번호" maxlength="10" required>
+		      <input class="font3" type="password" name="passwd" id="passwd" placeholder="비밀번호" maxlength="10">
 		   </td>
 		</tr>
 		<tr>
 		   <td colspan="2" class="font2">
 		      <label><input type="checkbox" name="c_id" value="SAVE" <%if(!c_id.isEmpty()){out.print("checked");}%>> 아이디 저장</label>			  
 			  &nbsp;&nbsp;&nbsp;
-			  <a href="agreement.jsp"><button class="btn btn-default">회원가입</button></a>
+			  <a href="agreement.jsp">회원가입</a>
 			  &nbsp;&nbsp;&nbsp;
 			  <input type="button" class="btn btn-default" value="아이디/비밀번호 찾기" onclick="findCheck()">
 		   </td>
@@ -55,7 +55,7 @@
 	 out.println("<strong>" + s_id + "</strong> 님<br>");
 %>
 	 <button type='button' class='btn btn-default' onclick="location.href='logout.jsp'">로그아웃</button>
-	 <button type='button' class='btn btn-default' onclick="location.href='memberModify.jsp'">회원정보수정</button>
+	 <button type='button' class='btn btn-default' onclick="location.href='memberModify.jsp?id=<%=s_id%>'">회원정보수정</button>
 	 <button type='button' class='btn btn-default' onclick="location.href='memberWithdraw.jsp?id=<%=s_id%>'">회원탈퇴</button>
 <%
  } // if end

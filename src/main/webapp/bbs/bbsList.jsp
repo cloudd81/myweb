@@ -9,7 +9,7 @@
 	<table class="table table-condensed context">
 	<tr>
 		<th class="col-xs-6" style="text-align: center;">제목</th>
-		<th class="col-xs-3" style="text-align: center;">이름</th>
+		<th class="col-xs-3" style="text-align: center;">내용</th>
 		<th class="col-xs-1" style="text-align: center;">작성일</th>
 		<th class="col-xs-2" style="text-align: center;">조회수</th>
 	</tr>

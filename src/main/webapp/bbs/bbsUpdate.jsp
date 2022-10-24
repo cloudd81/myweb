@@ -18,7 +18,7 @@
 			<input type="hidden" name="bbsno" value="<%=dto.getBbsno()%>">
 			<input type="hidden" name="col" value="<%=col%>">
 			<input type="hidden" name="word" value="<%=word%>">
-			<table class="table table-responsive">
+		<table class="table table-responsive">
 		<tr>
 		   <th class="font2">작성자</th>
 		   <td><input type="text" name="wname" id="wname" class="form-control font2" value="<%=dto.getWname()%>" maxlength="20" required></td>
@@ -33,7 +33,7 @@
 		</tr>
 		<tr>
 		   <th class="font2">비밀번호</th>
-		   <td><input type="password" name="passwd" id="passwd" class="form-control font2" value="<%=dto.getPasswd()%>" maxlength="10" required></td>
+		   <td><input type="password" name="passwd" id="passwd" class="form-control font2" maxlength="10" required></td>
 		</tr>
 		<tr>
 		    <td colspan="2" align="center">

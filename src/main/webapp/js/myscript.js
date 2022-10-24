@@ -171,7 +171,7 @@ function memberCheck() { // 회원가입 유효성 검사
     //2)비밀번호 5~10글자 인지?
 	let passwd = document.getElementById("passwd").value;
 	passwd = passwd.trim();
-	if(passwd.length<5 && passwd.length>10){
+	if(passwd.length<5 || passwd.length>10){
 		alert("비밀번호는 5글자~10글자 사이로 입력해주세요");
 		document.getElementById("passwd").focus();
 		return false;
@@ -205,6 +205,54 @@ function memberCheck() { // 회원가입 유효성 검사
 	} // if end
 
     //6)직업을 선택했는지?
+	let job = document.getElementById("job").value;
+	if(job==0){
+		alert("직업을 선택해주세요");
+		document.getElementById("job").focus();
+		return false;
+	} // if end
+	
+	return true;
+} // memberCheck() end
+
+function memberCheck2() { // 회원정보수정 유효성 검사
+    // 비밀번호 5~10글자 인지?
+	let passwd = document.getElementById("passwd").value;
+	passwd = passwd.trim();
+	if(passwd.length<5 || passwd.length>10){
+		alert("비밀번호는 5글자~10글자 사이로 입력해주세요");
+		document.getElementById("passwd").focus();
+		return false;
+	} // if end
+	
+    // 비밀번호와 비밀번호확인이 서로 일치하는지?
+	let repasswd = document.getElementById("repasswd").value;
+	repasswd = repasswd.trim();
+	if(repasswd!=passwd){
+		alert("비밀번호가 서로 일치하지 않습니다");
+		document.getElementById("repasswd").focus();
+		return false;
+	} // if end
+
+    // 이름 2글자 이상 인지?
+	let mname = document.getElementById("mname").value;
+	mname = mname.trim();
+	if(mname.length<2){
+		alert("이름은 2글자 이상 입력해주세요");
+		document.getElementById("mname").focus();
+		return false;
+	} // if end
+	
+    // 이메일 5글자 인지?
+	let email = document.getElementById("email").value;
+	email = email.trim();
+	if(email.length<5){
+		alert("이메일은 5글자 이상 입력해주세요");
+		document.getElementById("email").focus();
+		return false;
+	} // if end
+
+    // 직업을 선택했는지?
 	let job = document.getElementById("job").value;
 	if(job==0){
 		alert("직업을 선택해주세요");
@@ -258,7 +306,7 @@ function pdsCheck() {
 		return false;
 	} // if end
 	
-	// 3) 비밀번호? 5자 이상
+	// 3) 비밀번호? 4자 이상
 	let passwd = document.getElementById("passwd").value;
 	passwd = passwd.trim();
 	if(passwd.length<4){
@@ -287,3 +335,105 @@ function pdsCheck() {
 	} // if end
 	
 } // pdsCheck() end
+
+function pwCheck3(){
+	let passwd = document.getElementById("passwd").value;
+	passwd = passwd.trim();
+	if(passwd.length<3 && passwd.length>16){
+		alert("비밀번호는 4글자~15글자 사이로 입력해주세요");
+		document.getElementById("passwd").focus();
+		return false;
+	} // if end
+	
+	let message = "게시글을 삭제하면 첨부 파일도 삭제됩니다\n진행된 내용은 복구되지 않습니다\n계속 진행할까요?";
+	if(confirm(message)){ // 확인 true, 취소 false
+		return true;
+	} else {
+		return false;
+	} // if end
+	
+} // pwChechk2() end
+
+function pdsCheck2() {
+	// 1) 이름? 2글자 이상
+	let wname = document.getElementById("wname").value;
+	wname = wname.trim();
+	if(wname.length<2){
+		alert("이름은 2글자 이상 입력해주세요");
+		document.getElementById("wname").focus();
+		return false;
+	} // if end
+	
+	// 2) 제목? 2자 이상
+	let subject = document.getElementById("subject").value;
+	subject = subject.trim();
+	if(subject.length<2){
+		alert("제목은 2글자 이상 입력해주세요");
+		document.getElementById("subject").focus();
+		return false;
+	} // if end
+	
+	// 3) 비밀번호? 4자 이상
+	let passwd = document.getElementById("passwd").value;
+	passwd = passwd.trim();
+	if(passwd.length<4){
+		alert("비밀번호는 4글자 이상 입력해주세요");
+		document.getElementById("passwd").focus();
+		return false;
+	} // if end
+	
+	// 4) 첨부파일
+	// -> 파일의 확장명이 이미지 파일일 경우에만 업로드 가능
+	let filename = $("#filename").val();
+	filename = filename.trim();
+	if(filename.length==0){
+		alert("이미지 파일이 없습니다");
+		return false;
+	} else {
+		let dot = filename.lastIndexOf("."); // filename 변수 값에서 마지막 .의 순서값
+		let ext = filename.substr(dot+1); // 확장명 : 마지막 . 이후 문자열 가져오기
+		ext = ext.toLowerCase(); // 확장명을 전부 소문자로 치환
+		if(!(ext=="png" || ext=="jpg" || ext=="gif" || ext=="jpeg" || ext=="heic")){
+			alert("png, jps, gif, jpeg, heic 형식의 파일만 업로드 가능합니다");
+			return false;
+		} // if end
+	} // if end
+	
+	let message = "진행된 내용은 복구되지 않습니다\n계속 진행할까요?";
+	if(confirm(message)){ // 확인 true, 취소 false
+		return true;
+	} else {
+		return false;
+	} // if end
+	
+} // pdsCheck() end
+
+function noticeCheck(){ // 공지사항 유효성 검사
+	
+	//  제목 체크 - 2글자 이상 입력
+	let subject = document.getElementById("subject").value; // 작성자 가져오기
+	subject = subject.trim();
+	if(subject.length<2){
+		alert("제목은 2글자 이상 입력해주세요");
+		document.getElementById("subject").focus(); // 작성자칸에 커서 생성하기
+		return false;
+	} // if end
+
+	// 내용 체크 - 2글자 이상 입력
+	let content = document.getElementById("content").value; // 작성자 가져오기
+	content = content.trim();
+	if(content.length<2){
+		alert("내용에 2글자 이상 입력해주세요");
+		document.getElementById("content").focus(); // 작성자칸에 커서 생성하기
+		return false;
+	} // if end
+	
+	// 비밀번호 체크 - 4글자 이상이면서, 숫자형 기호만 입력 
+	let passwd = document.getElementById("passwd").value;
+	passwd = passwd.trim();
+	if(passwd.length<4 || isNaN(passwd)){
+		alert("비밀번호는 4글자 이상 숫자로 입력해주세요");
+		document.getElementById("passwd").focus();
+		return false;
+	}
+} // notice() end

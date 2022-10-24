@@ -4,7 +4,6 @@
 <%@ include file="../header_pds.jsp" %>
  <!-- 본문 시작 pdsRead.jsp -->
 <h3>포토 갤러리 상세보기</h3>
-<p style="text-align: right;"><a class="btn btn-default font2" href="pdsForm.jsp">사진 올리기</a></p>
 	<div class="container">
 		<div class="table-responsive">
 		<table class="table context" id="pds_tb">
@@ -23,7 +22,7 @@
 		</tr>
 		<tr>
 			<td>사진</td>			
-			<td><img src="../storage/<%=dto.getFilename()%>"></td>
+			<td><img src="../storage/<%=dto.getFilename()%>" style="width: 80%;"></td>
 		</tr>
 		<tr>
 			<td>파일 크기</td>			
@@ -41,6 +40,15 @@
 			<td>조회수</td>	
 			<td><%=dto.getReadcnt()%></td>
 		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<a class="btn btn-default" href="pdsList.jsp">돌아가기</a>
+				<a class="btn btn-default" href="pdsUpdate.jsp?pdsno=<%=pdsno%>&col=<%=col%>&word=<%=word%>">수정</a>
+				<a class="btn btn-default" href="pdsDel.jsp?pdsno=<%=pdsno%>">삭제</a>
+			</td>
+		</tr>
+		
+		
 		</table>
 		</div>
 	</div>

@@ -30,7 +30,7 @@ commit;
 
 select email from friends;
 
-select * from friends;
+select * from friends where mlevel!='F1';
 
 update friends set mlevel='D1' where id='ginggang';
 
@@ -68,6 +68,15 @@ WHERE mlevel IN ('A1', 'B1', 'C1', 'D1') AND id = 'itwill';
 INSERT INTO friends(id, passwd, mname, tel, email, zipcode, address1, address2, job, hope, mlevel, mdate)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'D1', sysdate)
 
-UPDATE friens
+UPDATE friends
 SET passwd = ? 
 WHERE mname = ? AND email = ?
+
+-- 회원 정보 수정
+-- 1) 수정하고자 하는 행 가져오기 read() 함수
+
+-- 2) 새로 입력한 값으로 행 수정하기 -> modifyProc() 함수
+-- 	(id는 수정 불가, mlevel은 운영자가 수정, mdate는 수정 안함)
+UPDATE friends
+SET passwd=?, mname=?, tel=?, email=?, zipcode=?, address1=?, address2=?, job=?
+WHERE id=?

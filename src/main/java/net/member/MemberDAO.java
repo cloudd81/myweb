@@ -16,6 +16,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.tomcat.util.security.KeyStoreUtil;
 
+import net.bbs.BbsDTO;
 import net.member.*;
 import net.utility.DBClose;
 import net.utility.DBOpen;
@@ -264,7 +265,6 @@ public class MemberDAO {
 				cnt = pstmt.executeUpdate();//
 				
 				// 4) 임시비밀번호를 이메일로 보내주기
-				System.out.println("11111111111111111111111");
 				String mailServer = "mw-002.cafe24.com"; // 메일 서버
 				Properties props = new Properties();
 				props.put("mail.smtp.host", mailServer);
@@ -281,9 +281,7 @@ public class MemberDAO {
 				msg.setSubject("임시 비밀번호 발송 메일"); // 메일 제목
 				msg.setContent(content, "text/html; charset=UTF-8"); // 메일 내용
 				msg.setSentDate(new Date()); // 메일 보낸 날짜
-				System.out.println("2222222222222222222222");
 				Transport.send(msg);
-				System.out.println("3333333333333333333");
 				
 				System.out.println(email + "님에게" + repasswd + " 비밀번호가 메일로 발송되었습니다<br>내용 : " + content);
 				System.out.println(cnt);
@@ -311,5 +309,73 @@ public class MemberDAO {
 		}// for end
 		return tmpPW.toString();
 	} // getTmpPasswd() end
+	
+	public MemberDTO read(String id) {
+		MemberDTO dto = null;
+		try {
+			con = dbopen.getConnection();
+			sql = new StringBuilder();
+			sql.append(" SELECT id, passwd, mname, tel, email, zipcode, address1, address2, job, hope, mlevel, mdate ");
+			sql.append(" FROM friends ");
+			sql.append(" where id=? ");
+			
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, id);
+			rs= pstmt.executeQuery();
+			if(rs.next()){
+				dto = new MemberDTO();
+				dto.setId(rs.getString("id"));
+				dto.setPasswd(rs.getString("passwd"));
+				dto.setMname(rs.getString("mname"));
+				dto.setTel(rs.getString("tel"));
+				dto.setEmail(rs.getString("email"));
+				dto.setZipcode(rs.getString("zipcode"));
+				dto.setAddress1(rs.getString("address1"));
+				dto.setAddress2(rs.getString("address2"));
+				dto.setJob(rs.getString("job"));
+				dto.setHope(rs.getString("hope"));
+				dto.setMlevel(rs.getString("mlevel"));
+				dto.setMdate(rs.getString("mdate"));
+			} // if end
+		} catch (Exception e) {
+			System.out.println("상세보기 실패 : " + e);
+		} finally {
+			DBClose.close(con, pstmt, rs);
+		}
+		return dto;
+	} // read() end
+	
+	public int modifyProc(MemberDTO dto) {
+		int cnt = 0; // 성공 또는 실패 여부 반환
+		try {
+			con=dbopen.getConnection();
+			
+			sql = new StringBuilder();
+			sql.append(" UPDATE friends ");
+			sql.append(" SET passwd=?, mname=?, tel=?, email=?, zipcode=?, address1=?, address2=?, job=?, hope=? ");
+			sql.append(" WHERE id=? ");
+			
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, dto.getPasswd());
+			pstmt.setString(2, dto.getMname());
+			pstmt.setString(3, dto.getTel());
+			pstmt.setString(4, dto.getEmail());
+			pstmt.setString(5, dto.getZipcode());
+			pstmt.setString(6, dto.getAddress1());
+			pstmt.setString(7, dto.getAddress2());
+			pstmt.setString(8, dto.getJob());
+			pstmt.setString(9, dto.getHope());
+			pstmt.setString(10, dto.getId());
+			
+			cnt = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("회원 정보 수정 실패 : " + e);
+		} finally {
+			DBClose.close(con, pstmt);
+		}
+		return cnt;
+	} // updateproc() end
+	
 	
 } // class end

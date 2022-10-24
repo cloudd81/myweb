@@ -38,7 +38,7 @@
 			dto=list.get(i);
 %>	
 			<tr>
-				<td><a href="pdsRead.jsp?pdsno=<%=dto.getPdsno()%>"><%=dto.getSubject()%></a>
+				<td><a href="pdsRead.jsp?pdsno=<%=dto.getPdsno()%>&col=<%=col%>&word=<%=word%>&nowPage=<%=nowPage%>"><%=dto.getSubject()%></a>
 <%
 				// new 이미지 띄우기
 				String regdt = dto.getRegdate().substring(0,10);
@@ -95,7 +95,7 @@
 <%
 	} // if end
 %>
-	</tbody>
+	</tbody>	
 	</table>
 	</div>
 	<div class="col-lg-2 hidden-ms"></div>

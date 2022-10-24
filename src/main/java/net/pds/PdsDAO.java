@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import net.bbs.BbsDTO;
 import net.utility.DBClose;
 import net.utility.DBOpen;
+import net.utility.Utility;
 
 public class PdsDAO {
 	private DBOpen dbopen = null;
@@ -45,7 +46,7 @@ public class PdsDAO {
 			DBClose.close(con, pstmt);
 		} // end
 		return cnt;
-	} // join() end
+	} // create() end
 	
 	public ArrayList<PdsDTO> list() {
 		ArrayList<PdsDTO> list = null;
@@ -90,7 +91,7 @@ public class PdsDAO {
 		try {
 			con = dbopen.getConnection();
 			sql = new StringBuilder();
-			sql.append(" SELECT wname, subject, filename, filesize, readcnt, regdate ");
+			sql.append(" SELECT pdsno, passwd, wname, subject, filename, filesize, readcnt, regdate ");
 			sql.append(" FROM tb_pds ");
 			sql.append(" where pdsno=? ");
 			
@@ -99,6 +100,8 @@ public class PdsDAO {
 			rs= pstmt.executeQuery();
 			if(rs.next()){
 				dto = new PdsDTO();
+				dto.setPdsno(rs.getInt("pdsno"));
+				dto.setPasswd(rs.getString("passwd"));
 				dto.setWname(rs.getString("wname"));
 				dto.setSubject(rs.getString("subject"));
 				dto.setFilename(rs.getString("filename"));
@@ -246,5 +249,78 @@ public class PdsDAO {
 		} // end
 		return list;
 	} // list3() end
+	
+	public int delete(int pdsno, String passwd, String saveDir) {
+		int cnt=0;
+		
+		try {
+			// 테이블의 행을 삭제하기 전에 삭제하고자 하는 파일명을 가져온다.
+			String filename = "";
+			PdsDTO oldDTO = read(pdsno);
+			if(oldDTO!=null) {
+				filename = oldDTO.getFilename();
+			} // if end
+
+			con=dbopen.getConnection();
+			
+			sql = new StringBuilder();
+			sql.append(" DELETE FROM tb_pds ");
+			sql.append(" WHERE pdsno = ? AND passwd = ? ");
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, pdsno);
+			pstmt.setString(2, passwd);
+			
+			cnt = pstmt.executeUpdate();
+			if(cnt==1) {
+				Utility.deleteFile(saveDir, filename);
+			} // if end
+			
+		} catch (Exception e) {
+			System.out.println("파일 삭제 실패 : " + e);
+		} finally {
+			DBClose.close(con, pstmt);
+		} // end
+		
+		
+		return cnt;
+	} // delete() end
+	
+	public int updateproc(PdsDTO dto, String saveDir) { System.out.println(dto);
+		int cnt = 0;
+		try {
+			// 테이블의 행을 삭제하기 전에 삭제하고자 하는 파일명을 가져온다.
+			String filename = "";
+			PdsDTO oldDTO = read(dto.getPdsno());
+			if(oldDTO!=null) {
+				filename = oldDTO.getFilename();
+			} // if end
+			
+			con=dbopen.getConnection();
+			
+			sql = new StringBuilder();
+			sql.append(" UPDATE tb_pds ");
+			sql.append(" SET wname=?, subject=?, filename=?, filesize=? ");
+			sql.append(" WHERE pdsno=? AND passwd=? ");
+			
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, dto.getWname());
+			pstmt.setString(2, dto.getSubject());
+			pstmt.setString(3, dto.getFilename());
+			pstmt.setLong(4, dto.getFilesize());
+			pstmt.setInt(5, dto.getPdsno());
+			pstmt.setString(6, dto.getPasswd());
+			
+			cnt = pstmt.executeUpdate();
+			if(cnt==1) {
+				Utility.deleteFile(saveDir, filename);
+			} // if end
+			
+		} catch (Exception e) {
+			System.out.println("포토 업로드 실패 : " + e);
+		} finally {
+			DBClose.close(con, pstmt);
+		} // end
+		return cnt;
+	} // updateproc() end
 	
 } // class end

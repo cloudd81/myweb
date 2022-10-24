@@ -6,7 +6,7 @@
 	<h3 class="font2">회원탈퇴</h3>
 	<p><a href="../index.jsp">탈퇴 취소</a></p>
 <%
-	String id = request.getParameter("id").trim();
+	String id = (String)session.getAttribute("s_id");
 %>
 	<div class="container">
 		<form method="post" action="memberDrawProc.jsp" onsubmit="return pwCheck2()">

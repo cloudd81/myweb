@@ -209,7 +209,7 @@ public class BbsDAO {
 			DBClose.close(con, pstmt);
 		}
 		return cnt;
-	} // create() end
+	} // updateproc() end
 	
 	public int reply(BbsDTO dto) {
 		int cnt = 0;
