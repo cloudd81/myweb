@@ -20,7 +20,10 @@
 	ArrayList<NoticeDTO> list=dao.list(col, word, nowPage, recordPerPage);
 	if(list==null){
 		out.print("<tr>");
-		out.print("	<td class='font2' colspan='5'>글없음!!</td>");
+		out.print("	<td class='font2' colspan='3'>게시글이 없습니다</td>");
+		out.print("</tr>");
+		out.print("<tr>");
+		out.print(" <td class='font2' colspan='3'><a style='color:#14C38E;' href='javascript:history.back();'>뒤로 가기</a></td>");
 		out.print("</tr>");
 	} else {
 		
@@ -61,7 +64,7 @@
 		// 페이지 리스트
 		out.println("<tr>");
 		out.println("	<td colspan='4' style='text-align: center; height: 20px;'>");
-		String paging = new Paging().paging4(totalRecord, nowPage, recordPerPage, col, word, "bbsList.jsp");
+		String paging = new Paging().paging4(totalRecord, nowPage, recordPerPage, col, word, "noticeList.jsp");
 		out.print(paging);
 		out.println("	</td>");
 		out.println("</tr>");
@@ -69,7 +72,7 @@
 		<!-- 검색 시작 -->
 		<tr>
 			<td colspan="4" style="text-align: center; height: 50px;">
-				<form action="bbsList.jsp" onsubmit="return searchCheck()">
+				<form action="noticeList.jsp" onsubmit="return searchCheck()">
 					<select name="col">
 						<option value="subject_content">제목+내용
 						<option value="subject">제목

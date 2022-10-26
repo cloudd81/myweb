@@ -26,8 +26,10 @@ public class BbsDAO {
 			con=dbopen.getConnection();
 			
 			sql = new StringBuilder();
-			sql.append(" INSERT INTO tb_bbs(bbsno, wname, subject, content, passwd, ip, grpno)");
-			sql.append(" VALUES (bbs_seq.nextval, ?, ?, ?, ?, ?, (SELECT NVL(MAX(bbsno),0)+1 FROM tb_bbs))");
+			// sql.append(" INSERT INTO tb_bbs(bbsno, wname, subject, content, passwd, ip, grpno)");
+			// sql.append(" VALUES (bbs_seq.nextval, ?, ?, ?, ?, ?, (SELECT NVL(MAX(bbsno),0)+1 FROM tb_bbs))");
+			sql.append(" INSERT INTO tb_bbs(wname,subject,content,grpno,passwd,ip,regdt)");
+		    sql.append(" VALUES(?, ?, ?, (SELECT ifnull(max(bbsno),0)+1 FROM tb_bbs as TB),?,?,now())");
 			
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, dto.getWname());
@@ -244,8 +246,10 @@ public class BbsDAO {
 			
 			// 3) 답변글 추가하기(insert문)
 			sql.delete(0, sql.length());
-			sql.append(" INSERT INTO tb_bbs(bbsno, wname, subject, content, passwd, ip, grpno, indent, ansnum)");
-			sql.append(" VALUES (bbs_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?) ");
+			// sql.append(" INSERT INTO tb_bbs(bbsno, wname, subject, content, passwd, ip, grpno, indent, ansnum)");
+			// sql.append(" VALUES (bbs_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?) ");
+			sql.append(" INSERT INTO tb_bbs(wname, subject, content, passwd, ip, grpno, indent, ansnum, regdt)");
+		    sql.append(" VALUES(?,?,?,?,?,?,?,?,now())");
 			
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, dto.getWname());
@@ -304,60 +308,7 @@ public class BbsDAO {
 			DBClose.close(con, pstmt, rs);
 		} // end		
 		return cnt;
-	} // count2() end	
-	
-	public ArrayList<BbsDTO> list2(String col, String word) {
-		ArrayList<BbsDTO> list = null;
-		
-		try {
-			con = dbopen.getConnection();
-			sql = new StringBuilder();
-			sql.append(" SELECT bbsno, wname, subject, readcnt, regdt, indent ");
-			sql.append(" FROM tb_bbs ");
-			
-			if(word.length()>=1) { // 검색어가 존재한다면
-				String search = "";
-				if(col.equals("subject_content")) {
-					search += " WHERE subject LIKE '%" + word + "%' ";
-					search += " OR content LIKE '%" + word + "%' ";
-				} else if(col.equals("subject")) {
-					search += " WHERE subject LIKE '%" + word + "%' ";
-				} else if(col.equals("content")) {
-					search += " WHERE content LIKE '%" + word + "%' ";
-				} else if(col.equals("wname")) {
-					search += " WHERE wname LIKE '%" + word + "%' ";
-				}// if end
-				sql.append(search);
-			} // if end 
-			
-			sql.append(" ORDER BY grpno desc, ansnum asc ");
-			
-			pstmt = con.prepareStatement(sql.toString());
-			rs= pstmt.executeQuery();	
-			if(rs.next()) {
-				// 전체 행을 저장할 수 있는
-				list = new ArrayList<>();
-				do {
-					BbsDTO dto = new BbsDTO();
-					dto.setBbsno(rs.getInt("bbsno"));
-					dto.setWname(rs.getString("wname"));
-					dto.setSubject(rs.getString("subject"));
-					dto.setReadcnt(rs.getInt("readcnt"));
-					dto.setRegdt(rs.getString("regdt"));
-					dto.setIndent(rs.getInt("indent"));
-					list.add(dto);
-				} while(rs.next());
-			} else {
-				list = null;
-			} // if end
-			
-		} catch (Exception e) {
-			System.out.println("목록 실패 : " + e);
-		} finally {
-			DBClose.close(con, pstmt, rs);
-		} // end
-		return list;
-	} // list2() end
+	} // count2() end
 	
 	public ArrayList<BbsDTO> list3(String col, String word, int nowPage, int recordPerPage) {
 		ArrayList<BbsDTO> list = null;
@@ -373,24 +324,22 @@ public class BbsDAO {
 			word = word.trim(); // 검색어 좌우 공백 제거
 			
 			if(word.length()==0) { // 검색하지 않는 경우
-				sql.append(" SELECT * ");
-				sql.append(" FROM ( ");
-				sql.append(" 	SELECT bbsno, wname, subject, readcnt, indent, regdt, rownum as r ");
-				sql.append(" 	FROM ( ");
-				sql.append(" 		SELECT bbsno, wname, subject, readcnt, indent, regdt ");
-				sql.append(" 		FROM tb_bbs ");
-				sql.append(" 		ORDER BY grpno DESC, ansnum ");
-				sql.append(" 		) ");
-				sql.append(" 	) ");
-				sql.append(" WHERE r>=" + startRow + "AND r<=" + endRow );
+				sql.append(" SELECT bbsno,subject,wname,content,readcnt,indent,regdt, grpno,ansnum, r ");
+				sql.append(" FROM( ");
+				sql.append(" 	SELECT bbsno,subject,wname,content,readcnt,indent,regdt, grpno,ansnum, @RNO := @RNO + 1 AS r ");
+				sql.append(" 	FROM (");
+				sql.append("		SELECT bbsno,subject,wname,content,readcnt,indent,regdt, grpno,ansnum ");
+				sql.append(" 		FROM tb_bbs  ");
+				sql.append(" 		)A, (SELECT @RNO := 0) B ORDER BY grpno DESC, ansnum ASC ");
+				sql.append(" )C WHERE r>=" + startRow + " AND r<=" + endRow );
 				
 			} else { // 검색한 경우
-				sql.append(" SELECT * ");
-				sql.append(" FROM ( ");
-				sql.append(" 	SELECT bbsno, wname, subject, readcnt, indent, regdt, rownum as r ");
-				sql.append(" 	FROM ( ");
-				sql.append(" 		SELECT bbsno, wname, subject, readcnt, indent, regdt ");
-				sql.append(" 		FROM tb_bbs ");
+				sql.append(" SELECT grpno,ansnum,bbsno,subject,wname,content,readcnt,indent,regdt, r ");
+				sql.append(" FROM( ");
+				sql.append(" 		SELECT grpno,ansnum,bbsno,subject,wname,content,readcnt,indent,regdt, @RNUM := @RNUM + 1 AS r ");
+				sql.append("       FROM ( ");
+				sql.append("     		  SELECT grpno,ansnum,bbsno,subject,wname,content,readcnt,indent,regdt ");
+				sql.append("              FROM tb_bbs ");
 				
 				String search = "";
 				if(col.equals("subject_content")) {
@@ -403,12 +352,12 @@ public class BbsDAO {
 				} else if(col.equals("wname")) {
 					search += " WHERE wname LIKE '%" + word + "%' ";
 				}// if end
-				sql.append(search);
 				
-				sql.append(" 		ORDER BY grpno DESC, ansnum ");
-				sql.append(" 		) ");
-				sql.append(" 	) ");
-				sql.append(" WHERE r>=" + startRow + "AND r<=" + endRow );
+				sql.append(search);
+				sql.append("   ORDER BY grpno DESC, ansnum ASC ");
+				sql.append("            )A, ( SELECT @RNUM := 0 ) B ");
+				sql.append(" )C ");
+				sql.append(" WHERE r>=" + startRow + " AND r<=" + endRow );
 			}
 			
 			pstmt = con.prepareStatement(sql.toString());

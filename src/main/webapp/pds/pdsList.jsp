@@ -10,6 +10,7 @@
 	</div>
 	<div class="col-lg-2 hidden-ms"></div>
 	<div class="col-lg-8">
+	<table class="table table-striped context">
 <%
 //한 페이지당 출력할 행의 개수
 	int recordPerPage = 10;	
@@ -17,12 +18,14 @@
 	ArrayList<PdsDTO> list=dao.list3(col, word, nowPage, recordPerPage);
 	if(list==null){
 		out.print("<tr>");
-		out.print("	<td class='font2' colspan='5'>글없음!!</td>");
+		out.print("	<td class='font2' colspan='3'>게시글이 없습니다</td>");
+		out.print("</tr>");
+		out.print("<tr>");
+		out.print(" <td class='font2' colspan='3'><a style='color:#14C38E;' href='javascript:history.back();'>뒤로 가기</a></td>");
 		out.print("</tr>");
 	} else {
 		String today = Utility.getDate();
 %>
-		<table class="table table-striped context">
 		<thead>
 			<tr>
 				<th class="col-xs-3" style="text-align: center;">제목</th>
@@ -61,7 +64,7 @@
 		// 글 갯수
 		int totalRecord = dao.count2(col, word);
 		out.println("<tr>");
-		out.println("	<td colspan='5' style='text-align:right;'>");
+		out.println("	<td colspan='4' style='text-align:right;'>");
 		out.println("		글 갯수 : <strong>" + totalRecord + "</strong>");
 		out.println("	<td>");
 		out.println("</tr>");
@@ -86,15 +89,15 @@
 					<input type="text" name="word" id="word">
 					<input type="submit" value="검색" class="btn btn-primary">
 				</form>
-			</td>		
+			</td>
+<%
+	} // if end
+%>	
 			<td>
 				<p style="text-align: right;"><a class="btn btn-default font2" href="pdsForm.jsp">사진 올리기</a></p>
 			</td>
 		</tr>
 		<!-- 검색끝 -->
-<%
-	} // if end
-%>
 	</tbody>	
 	</table>
 	</div>

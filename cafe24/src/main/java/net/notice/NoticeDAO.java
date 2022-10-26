@@ -25,8 +25,8 @@ public class NoticeDAO {
 			con=dbopen.getConnection();
 			
 			sql = new StringBuilder();
-			sql.append(" INSERT INTO tb_notice(noticeno, subject, content, regdt) ");
-			sql.append(" VALUES (noticeno_seq.nextval, ?, ?, sysdate) ");
+			sql.append(" INSERT INTO tb_notice(subject, content, regdt) ");
+			sql.append(" VALUES (?, ?, now()) ");
 			
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, dto.getSubject());
@@ -56,21 +56,20 @@ public class NoticeDAO {
 			word = word.trim(); // 검색어 좌우 공백 제거
 			
 			if(word.length()==0) { // 검색하지 않는 경우
-				sql.append(" SELECT * ");
+				sql.append(" SELECT noticeno, subject, content, regdt, r ");
 				sql.append(" FROM ( ");
-				sql.append(" 	SELECT noticeno, subject, content, regdt, rownum as r ");
+				sql.append(" 	SELECT noticeno, subject, content, regdt, @RNO := @RNO + 1 AS r ");
 				sql.append(" 	FROM ( ");
 				sql.append(" 		SELECT noticeno, subject, content, regdt ");
 				sql.append(" 		FROM tb_notice ");
-				sql.append(" 		ORDER BY regdt DESC ");
-				sql.append(" 		) ");
-				sql.append(" 	) ");
-				sql.append(" WHERE r>=" + startRow + "AND r<=" + endRow );
+				sql.append(" 		)A, (SELECT @RNO := 0) B ORDER BY regdt DESC ");
+				sql.append(" 	)C ");
+				sql.append(" WHERE r>=" + startRow + " AND r<=" + endRow );
 				
 			} else { // 검색한 경우
-				sql.append(" SELECT * ");
+				sql.append(" SELECT noticeno, subject, content, regdt, r ");
 				sql.append(" FROM ( ");
-				sql.append(" 	SELECT noticeno, subject, content, regdt, rownum as r ");
+				sql.append(" 	SELECT noticeno, subject, content, regdt, @RNO := @RNO + 1 AS r ");
 				sql.append(" 	FROM ( ");
 				sql.append(" 		SELECT noticeno, subject, content, regdt ");
 				sql.append(" 		FROM tb_notice ");
@@ -87,9 +86,9 @@ public class NoticeDAO {
 				sql.append(search);
 				
 				sql.append(" 		ORDER BY regdt DESC ");
-				sql.append(" 		) ");
-				sql.append(" 	) ");
-				sql.append(" WHERE r>=" + startRow + "AND r<=" + endRow );
+				sql.append(" 		)A, (SELECT @RNO := 0) B ORDER BY regdt DESC ");
+				sql.append(" 	)C ");
+				sql.append(" WHERE r>=" + startRow + " AND r<=" + endRow );
 			}
 			
 			pstmt = con.prepareStatement(sql.toString());

@@ -20,10 +20,6 @@
 		   <td><textarea rows="5"  class="form-control font2" name="content" id="content" required></textarea></td>
 		</tr>
 		<tr>
-		   <th class="font2">비밀번호</th>
-		   <td><input type="password" name="passwd" id="passwd" class="form-control font2" maxlength="10" required></td>
-		</tr>
-		<tr>
 		    <td colspan="2" align="center">
 		       <input type="submit" value="쓰기" class="btn btn-default btn-block font2">
 		       <input type="reset"  value="취소" class="btn btn-default btn-block font2">

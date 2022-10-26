@@ -21,7 +21,10 @@
 	ArrayList<BbsDTO> list=dao.list3(col, word, nowPage, recordPerPage);
 	if(list==null){
 		out.print("<tr>");
-		out.print("	<td class='font2' colspan='5'>글없음!!</td>");
+		out.print("	<td class='font2' colspan='4'>게시글이 없습니다</td>");
+		out.print("</tr>");
+		out.print("<tr>");
+		out.print(" <td class='font2' colspan='4'><a style='color:#14C38E;' href='javascript:history.back();'>뒤로 가기</a></td>");
 		out.print("</tr>");
 	} else {
 		

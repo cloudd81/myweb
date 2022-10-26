@@ -28,8 +28,8 @@ public class PdsDAO {
 			con=dbopen.getConnection();
 			
 			sql = new StringBuilder();
-			sql.append(" INSERT INTO tb_pds(pdsno, wname, subject, passwd, filename, filesize, regdate) ");
-			sql.append(" VALUES (pds_seq.nextval, ?, ?, ?, ?, ?, sysdate) ");
+			sql.append(" INSERT INTO tb_pds(wname,subject,passwd,filename,filesize,regdate) ");
+		    sql.append(" VALUES (?,?,?,?,?,now()) ");
 			
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, dto.getWname());
@@ -186,21 +186,20 @@ public class PdsDAO {
 			word = word.trim(); // 검색어 좌우 공백 제거
 			
 			if(word.length()==0) { // 검색하지 않는 경우
-				sql.append(" SELECT * ");
+				sql.append(" SELECT pdsno, wname, subject, filename, filesize, readcnt, regdate, r ");
 				sql.append(" FROM ( ");
-				sql.append(" 	SELECT pdsno, wname, subject, filename, filesize, readcnt, regdate, rownum as r ");
+				sql.append(" 	SELECT pdsno, wname, subject, filename, filesize, readcnt, regdate,  @RNO := @RNO + 1 AS r ");
 				sql.append(" 	FROM ( ");
 				sql.append(" 		SELECT pdsno, wname, subject, filename, filesize, readcnt, regdate ");
 				sql.append(" 		FROM tb_pds ");
-				sql.append(" 		ORDER BY regdate DESC ");
-				sql.append(" 		) ");
-				sql.append(" 	) ");
-				sql.append(" WHERE r>=" + startRow + "AND r<=" + endRow );
+				sql.append(" 		)A, (SELECT @RNO := 0) B ORDER BY regdate DESC ");
+				sql.append(" 	)C ");
+				sql.append(" WHERE r>=" + startRow + " AND r<=" + endRow );
 				
 			} else { // 검색한 경우
-				sql.append(" SELECT * ");
+				sql.append(" SELECT pdsno, wname, subject, filename, filesize, readcnt, regdate, r ");
 				sql.append(" FROM ( ");
-				sql.append(" 	SELECT pdsno, wname, subject, filename, filesize, readcnt, regdate, rownum as r ");
+				sql.append(" 	SELECT pdsno, wname, subject, filename, filesize, readcnt, regdate,  @RNO := @RNO + 1 AS r ");
 				sql.append(" 	FROM ( ");
 				sql.append(" 		SELECT pdsno, wname, subject, filename, filesize, readcnt, regdate ");
 				sql.append(" 		FROM tb_pds ");
@@ -217,9 +216,9 @@ public class PdsDAO {
 				sql.append(search);
 				
 				sql.append(" 		ORDER BY regdate DESC ");
-				sql.append(" 		) ");
-				sql.append(" 	) ");
-				sql.append(" WHERE r>=" + startRow + "AND r<=" + endRow );
+				sql.append(" 		)A, (SELECT @RNO := 0) B ORDER BY regdate DESC ");
+				sql.append(" 	)C ");
+				sql.append(" WHERE r>=" + startRow + " AND r<=" + endRow );
 			}
 			
 			pstmt = con.prepareStatement(sql.toString());

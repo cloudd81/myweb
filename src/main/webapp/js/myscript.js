@@ -409,7 +409,6 @@ function pdsCheck2() {
 } // pdsCheck() end
 
 function noticeCheck(){ // 공지사항 유효성 검사
-	
 	//  제목 체크 - 2글자 이상 입력
 	let subject = document.getElementById("subject").value; // 작성자 가져오기
 	subject = subject.trim();
@@ -426,14 +425,7 @@ function noticeCheck(){ // 공지사항 유효성 검사
 		alert("내용에 2글자 이상 입력해주세요");
 		document.getElementById("content").focus(); // 작성자칸에 커서 생성하기
 		return false;
+	} else {
+		return true;
 	} // if end
-	
-	// 비밀번호 체크 - 4글자 이상이면서, 숫자형 기호만 입력 
-	let passwd = document.getElementById("passwd").value;
-	passwd = passwd.trim();
-	if(passwd.length<4 || isNaN(passwd)){
-		alert("비밀번호는 4글자 이상 숫자로 입력해주세요");
-		document.getElementById("passwd").focus();
-		return false;
-	}
 } // notice() end

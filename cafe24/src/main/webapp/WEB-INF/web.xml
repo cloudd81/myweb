@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>cafe24</display-name>
+  
+  <!-- web.xml 배치관리자 -->
+  <!-- 웹어플리케이션의 환경설정, 한글 필터 -->
+  <!-- /WEB-INF/web.xml이 수정되면 반드시 서버를 재시작할 것!!! -->
+  <!-- /WEB-INF/lib에 외부 라이브러리(.jar)가 추가되면 반드시 서버를 재시작할 것!! -->
+  
+  <!-- 웹어플리케이션 연결시 첫 페이지에 등록할 때 쓰는 태그 -->
+  <!-- http://localhost:9090/myweb 을 입력하면 index.jsp를 자동으로 호출한다 -->
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <session-config>
+  	<session-timeout>20</session-timeout>
+  </session-config>  
+
+  
+</web-app>
