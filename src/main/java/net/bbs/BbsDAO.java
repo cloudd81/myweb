@@ -240,7 +240,7 @@ public class BbsDAO {
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setInt(1, grpno);
 			pstmt.setInt(2, ansnum);
-			rs=pstmt.executeQuery();
+			pstmt.executeUpdate();
 			
 			// 3) 답변글 추가하기(insert문)
 			sql.delete(0, sql.length());

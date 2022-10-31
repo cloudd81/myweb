@@ -39,10 +39,9 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
     <ul class="nav navbar-nav navbar-right">
-        <li><a class="font2" href="../bbs/bbsList.jsp">게시판</a></li>
-        <li><a class="font2" href="./noticeList.jsp">공지사항</a></li>
-        <li><a class="font2" href="../pds/pdsList.jsp">포토갤러리</a></li>
-        <li><a class="font2" href="../mail/mailForm.jsp">메일보내기</a></li>
+        <li><a class="font2" href="../bbs/bbsList.jsp" style="color: #f1f1f1; font-size: 20px;">게시판</a></li>
+        <li><a class="font2" href="./noticeList.jsp" style="color: #f1f1f1; font-size: 20px;">공지사항</a></li>
+        <li><a class="font2" href="../pds/pdsList.jsp" style="color: #f1f1f1; font-size: 20px;">포토갤러리</a></li>
 <%
 	if(s_id.equals("guest") || s_passwd.equals("guest") || s_mlevel.equals("guest")){ 
 	// 아이디 저장 쿠키 확인 ---------------------------------------------------
@@ -60,7 +59,7 @@
 	// ------------------------------------------------------------------	 
 %>
         <li>
-        	<a class="font2" href="../member/loginForm.jsp">
+        	<a class="font2" href="../member/loginForm.jsp" style="color: #f1f1f1; font-size: 20px;">
         		<span class="glyphicon glyphicon-log-in"></span>
         		로그인
         	</a>
@@ -70,7 +69,7 @@
 	 // 로그인에 성공했다면
 %>	
         <li>
-        	<a class="font2" href="../member/loginForm.jsp">
+        	<a class="font2" href="../member/loginForm.jsp" style="color: #f1f1f1; font-size: 20px;">
         		<span class="glyphicon glyphicon-user"></span>
         		<%=s_id%>님
         	</a>
